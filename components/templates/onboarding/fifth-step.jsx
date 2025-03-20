@@ -30,7 +30,7 @@ const FifthStep = ({ nextStep, selectedGuide }) => {
           transition={{ delay: 0.2 }}
         >
           <Image
-            src={`/assets/images/guides/lena3.png`}
+            src={`/assets/images/guides/${selectedGuide}3.png`}
             alt="Lena and Ally"
             width={380}
             height={380}

@@ -18,7 +18,9 @@ const ChoosingGuide = ({ nextStep, setSelectedGuide, selectedGuide }) => {
         {guides.map((guide) => (
           <motion.div
             key={guide.id}
-            className="guide-card"
+            className={`guide-card ${
+              selectedGuide === guide.id ? "selected" : ""
+            }`}
             onClick={() => setSelectedGuide(guide.id)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

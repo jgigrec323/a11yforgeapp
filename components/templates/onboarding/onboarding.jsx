@@ -113,7 +113,11 @@ const OnBoarding = () => {
                 type="primary"
               />
             ) : (
-              <SignUpBtns title={"Skip onboarding"} type="secondary" />
+              <SignUpBtns
+                title={"Skip onboarding"}
+                onClick={() => setIsFinalStep(true)}
+                type="secondary"
+              />
             )}
           </motion.div>
         </>

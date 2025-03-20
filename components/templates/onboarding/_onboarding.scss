@@ -36,6 +36,11 @@
       align-items: center;
       cursor: pointer;
       text-align: center;
+
+      &.selected .guide-name {
+        background-color: $primary;
+        color: white;
+      }
     }
 
     .guide-name {
