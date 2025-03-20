@@ -188,6 +188,70 @@
         }
       }
     }
+    &.step5 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      position: relative;
+      .white-space-step-5 {
+        min-width: 200px;
+        position: relative;
+        height: 100%;
+      }
+      .step5-content {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        width: 100%;
+        position: relative; // Ensures absolute elements stay within this container
+      }
+
+      .speech-bubble-container {
+        position: absolute;
+        left: 35px;
+        top: 0; // Adjust as needed
+
+        & .speech-bubble {
+          max-width: 350px;
+        }
+      }
+
+      .second-speech-bubble {
+        position: absolute;
+        left: 35px; // Adjust as needed
+        top: 35%; // Adjust as needed
+        width: 320px;
+        & .speech-bubble {
+          max-width: 300px;
+        }
+      }
+
+      .guide-container {
+        display: flex;
+        z-index: 2;
+
+        & img {
+          width: auto;
+          object-fit: contain;
+        }
+      }
+
+      .chat-ui {
+        transform: translateX(-15%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        & img {
+          object-fit: contain;
+          max-width: 320px;
+        }
+      }
+    }
   }
   .bottom {
     position: absolute;

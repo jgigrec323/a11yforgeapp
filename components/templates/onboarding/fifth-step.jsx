@@ -6,17 +6,23 @@ import Image from "next/image";
 const FifthStep = ({ nextStep, selectedGuide }) => {
   return (
     <motion.div
-      className="step step4"
+      className="step step5"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Speech Bubble */}
-      <SpeechBubble message='Your selected features can be viewed and easily edited in the <strong>"My Health Profile"</strong> section of your dashboard.' />
+      {/* Speech Bubbles with Absolute Positioning */}
+      <div className="speech-bubble-container">
+        <SpeechBubble message="Ally is your <strong>friendly, empathetic</strong> and <strong>intuitive guide</strong>, here to make digital accessibility easy and effortless." />
+      </div>
 
+      <div className="second-speech-bubble">
+        <SpeechBubble message="Whether by text or voice, I’m here to <strong>provide clear, helpful support</strong> for an inclusive experience! ✨" />
+      </div>
+      <div className="white-space-step-5"></div>
       {/* Main Content */}
-      <div className="step4-content">
-        {/* Selected Guide */}
+      <div className="step5-content">
+        {/* AI Ally & Lena Holding Hands */}
         <motion.div
           className="guide-container"
           initial={{ opacity: 0 }}
@@ -24,47 +30,27 @@ const FifthStep = ({ nextStep, selectedGuide }) => {
           transition={{ delay: 0.2 }}
         >
           <Image
-            src={`/assets/images/guides/${selectedGuide}2.png`}
-            alt={selectedGuide}
-            width={220}
-            height={350}
+            src={`/assets/images/guides/lena3.png`}
+            alt="Lena and Ally"
+            width={380}
+            height={380}
           />
         </motion.div>
 
-        {/* GIF / UI Demo */}
+        {/* Chat UI / GIF */}
         <motion.div
-          className="demo-gif"
+          className="chat-ui"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
           <Image
-            src={"/assets/gifs/fourth-gif.gif"}
-            alt="Fourth step UI demo"
-            width={300}
+            src={"/assets/gifs/fifth-gif.gif"}
+            alt="Chat UI Demo"
+            width={280}
             height={500}
           />
         </motion.div>
-
-        {/* AI Ally Character */}
-        <motion.div
-          className="ally"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Image
-            src={"/assets/images/guides/ally.png"}
-            alt="AI Ally"
-            width={220}
-            height={200}
-          />
-        </motion.div>
-
-        {/* Speech Bubble for AI Ally */}
-        <div className="ally-speech-bubble">
-          <SpeechBubble message="Hi, friend! So nice to meet you! How can I help you today? 🦮✨" />
-        </div>
       </div>
     </motion.div>
   );

@@ -9,8 +9,18 @@ import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import SecondStep from "./second-step";
 import ThirdStep from "./third-step";
 import FourthStep from "./fourth-step";
+import FifthStep from "./fifth-step";
+import SixthStep from "./sixth-step";
 
-const steps = [ChoosingGuide, FirstStep, SecondStep, ThirdStep, FourthStep]; // Add more steps here later
+const steps = [
+  ChoosingGuide,
+  FirstStep,
+  SecondStep,
+  ThirdStep,
+  FourthStep,
+  FifthStep,
+  SixthStep,
+]; // Add more steps here later
 
 const OnBoarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
