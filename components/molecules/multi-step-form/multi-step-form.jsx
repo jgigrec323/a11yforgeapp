@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import Cookies from "js-cookie";
+
 import countriesData from "../../../lib/countries.json";
 import Image from "next/image";
 import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { signup } from "../../../lib/api-calls";
 
 const MultiStepForm = () => {
   const router = useRouter();
@@ -13,7 +16,15 @@ const MultiStepForm = () => {
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [location, setLocation] = useState("");
   const [accessibilityProfile, setAccessibilityProfile] = useState("");
   const [assistiveDeviceCategory, setAssistiveDeviceCategory] =
     useState("Screen Reader");
@@ -55,18 +66,87 @@ const MultiStepForm = () => {
   };
 
   const handleNextStep = (event) => {
-    event.preventDefault(); // ✅ Prevent default form submission
+    event.preventDefault();
     setStep(2);
   };
 
   const handlePrevStep = (event) => {
-    event.preventDefault(); // ✅ Prevent default form submission
+    event.preventDefault();
     setStep(1);
   };
 
-  const handleRegister = (event) => {
-    event.preventDefault(); // ✅ Prevent default form submission
-    router.push("/congratulations");
+  const validateForm = () => {
+    let errors = {};
+
+    // Check required fields
+    if (!firstName.trim()) errors.firstName = "First name is required";
+    if (!lastName.trim()) errors.lastName = "Last name is required";
+    if (!email.trim()) errors.email = "Email is required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      errors.email = "Invalid email format";
+    if (!phoneNumber.trim()) errors.phoneNumber = "Phone number is required";
+    if (!password.trim()) errors.password = "Password is required";
+    if (password.length < 8)
+      errors.password = "Password must be at least 4 characters";
+    if (password !== confirmPassword)
+      errors.confirmPassword = "Passwords do not match";
+    if (!location.trim()) errors.location = "Location is required";
+    if (!accessibilityProfile)
+      errors.accessibilityProfile = "Please select an accessibility profile";
+
+    // Social media link validation
+    if (socialMediaLink.trim() && !/^https?:\/\/.+$/.test(socialMediaLink)) {
+      errors.socialMediaLink = "Invalid URL format";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0; // Returns true if no errors
+  };
+
+  const handleRegister = async (event) => {
+    event.preventDefault();
+
+    if (!validateForm()) {
+      console.log("Validation failed!", errors);
+      return; // Stop execution if validation fails
+    }
+    const userData = {
+      firstName,
+      lastName,
+      username: `${firstName.toLowerCase()}.${lastName.toLowerCase()}`, // Auto-generate username
+      email,
+      phoneNumber: `${selectedCountry.dialCode}${phoneNumber}`,
+      password,
+      location,
+      accessibilityProfile,
+      assistiveDeviceCategory,
+      assistiveDevice,
+      socialMediaPlatform,
+      socialMediaLink,
+    };
+
+    try {
+      const response = await signup(userData);
+
+      console.log(response.data);
+      if (response?.data?.token) {
+        Cookies.set("token", response.data.token, {
+          expires: 7, // Expires in 7 days
+          secure: true,
+          sameSite: "Strict",
+          path: "/",
+        });
+        router.push("/congratulations");
+      } else {
+        console.error("Signup successful but no token received.");
+        toast("Signup failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Signup failed:", error);
+      alert(
+        error?.response?.data?.message || "Signup failed. Please try again."
+      );
+    }
   };
   const togglePassword = () => setShowPassword(!showPassword);
   const toggleConfirmPassword = () =>
@@ -95,9 +175,33 @@ const MultiStepForm = () => {
                 height={16}
                 src={"/assets/icons/iconamoon--profile-thin.png"}
               ></Image>
-              Full Name
+              First Name
             </label>
-            <input type="text" placeholder="Enter your full name" required />
+            <input
+              type="text"
+              placeholder="Enter your first name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label>
+              <Image
+                alt="Profile icon"
+                width={16}
+                height={16}
+                src={"/assets/icons/iconamoon--profile-thin.png"}
+              ></Image>
+              Last Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your last name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
           </div>
 
           <div className="input-group">
@@ -110,7 +214,13 @@ const MultiStepForm = () => {
               ></Image>
               Email
             </label>
-            <input type="email" placeholder="Enter your email" required />
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
 
           <div className="input-group">
@@ -145,13 +255,18 @@ const MultiStepForm = () => {
                   ))}
                 </select>
               </div>
-              <input type="tel" placeholder="Phone Number" required />
+              <input
+                type="tel"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
+              />
             </div>
           </div>
 
           <div className="input-group">
             <label>
-              {" "}
               <Image
                 alt="Password"
                 width={16}
@@ -164,6 +279,8 @@ const MultiStepForm = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <span className="eye-icon" onClick={togglePassword}>
@@ -174,9 +291,8 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              {" "}
               <Image
-                alt="Password"
+                alt="lock"
                 width={16}
                 height={16}
                 src={"/assets/icons/arcticons--lock.png"}
@@ -188,6 +304,8 @@ const MultiStepForm = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm password"
                 required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <span className="eye-icon" onClick={toggleConfirmPassword}>
                 👁
@@ -204,16 +322,20 @@ const MultiStepForm = () => {
         <form className="form" onSubmit={handleRegister}>
           <div className="input-group">
             <label>
-              {" "}
               <Image
-                alt="Password"
+                alt="Location"
                 width={16}
                 height={16}
                 src={"/assets/icons/akar-icons--location.png"}
               ></Image>
               Location
             </label>
-            <input type="text" placeholder="Enter your location" required />
+            <input
+              type="text"
+              placeholder="Enter your location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
           </div>
 
           <div className="input-group">
@@ -229,7 +351,6 @@ const MultiStepForm = () => {
             <select
               value={accessibilityProfile}
               onChange={(e) => setAccessibilityProfile(e.target.value)}
-              required
             >
               <option value="" disabled>
                 Select an accessibility profile
@@ -243,7 +364,6 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              {" "}
               <Image
                 alt="Assistive device"
                 width={16}
@@ -256,7 +376,6 @@ const MultiStepForm = () => {
               <select
                 value={assistiveDeviceCategory}
                 onChange={(e) => setAssistiveDeviceCategory(e.target.value)}
-                required
               >
                 <option value="Screen Reader">Screen Reader</option>
                 <option value="Speech Recognition">Speech Recognition</option>
@@ -265,7 +384,6 @@ const MultiStepForm = () => {
               <select
                 value={assistiveDevice}
                 onChange={(e) => setAssistiveDevice(e.target.value)}
-                required
               >
                 {assistiveDeviceCategory === "Screen Reader" && (
                   <>
