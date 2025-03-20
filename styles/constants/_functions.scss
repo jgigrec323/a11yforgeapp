@@ -1,0 +1,129 @@
+@use "sass:math";
+
+$baseFontSize: 16px;
+$globalScaleFactor: var(--global-scale-factor, 1);
+
+@function rem($size) {
+    $rem-size: math.div($size, $baseFontSize);
+
+    @return $rem-size * 1rem;
+}
+
+@function url-encode($string) {
+    $map: (
+        "%": "%25",
+        "<": "%3C",
+        ">": "%3E",
+        // " ": "%20", // If spaces are also to be encoded, uncomment this
+        "!": "%21",
+        "*": "%2A",
+        "'": "%27",
+        '"': "'",
+        "(": "%28",
+        ")": "%29",
+        ";": "%3B",
+        "@": "%40",
+        "&": "%26",
+        "+": "%2B",
+        "$": "%24",
+        ",": "%2C",
+        "?": "%3F",
+        "#": "%23",
+        "[": "%5B",
+        "]": "%5D"
+    );
+
+    $new: $string;
+
+    @each $search, $replace in $map {
+        $new: str-replace($new, $search, $replace);
+    }
+
+    @return $new;
+}
+
+$scale-factor: var(--font-scale-factor);
+
+// @function vw($px-value, $font-size: false) {
+//     @if unit($px-value) == 'px' {
+//         $root-font-size: 16px; // Matches the base font size in JS
+//         $rem-value: $px-value / $root-font-size;
+
+//         // Apply scaling logic
+//         @if $font-size == true {
+//             // Use --font-scale-factor for font sizes
+//             @return calc(#{$rem-value}rem * var(--font-scale-factor, 1));
+//         } @else {
+//             // Use --global-scale-factor for everything else
+//             @return calc(#{$rem-value}rem * var(--global-scale-factor, 1));
+//         }
+//     }
+
+//     @warn "Input value must be in px.";
+//     @return $px-value;
+// }
+
+@function vw($px-value, $font-size: false) {
+    // Ensure the input is in px
+    @if unit($px-value) == "px" and unit($baseFontSize) == "px" {
+        $rem-value: $px-value / $baseFontSize;
+        @if $font-size == true {
+            @return #{$rem-value}rem;
+        } @else {
+            @return calc(#{$rem-value}rem * var(--global-scale-factor, 1));
+        }
+    }
+
+    // Warn if input is not in px
+    @warn "Input value must be in px and base font size must be in px.";
+    @return $px-value; // Return the original value as a fallback
+}
+
+// @function vw(
+//     $px-value,
+//     $font-size: false,
+//     $base-font-size: 16px,
+//     $base-width: 1920px,
+//     $min-font-size: 2px,
+//     $max-font-size: 24px
+// ) {
+//     // Ensure the input is in px
+//     @if unit($px-value) == "px" and unit($base-font-size) == "px" and unit($base-width) == "px" {
+//         // Calculate rem value
+//         $rem-value: $px-value / $base-font-size;
+
+//         // Return clamp for responsive font sizes
+//         @if $px-value == $base-font-size {
+//             @return clamp($min-font-size, calc(#{$base-font-size} * (100vw / #{$base-width})), $max-font-size);
+//         }
+
+//         // Return rem value for regular px-to-rem conversion
+//         @return #{$rem-value}rem;
+//     }
+
+//     // Warn if input is not in px
+//     @warn "Input values must be in px for $px-value, $base-font-size, and $base-width.";
+//     @return $px-value; // Return the original value as a fallback
+// }
+
+@function vh($px-vh, $base-vh: 1600px) {
+    @return ($px-vh * 100vh) / $base-vh * 1.334;
+}
+
+@function breakpoint-min($name, $breakpoints: $breakpoints) {
+    $min: map-get($breakpoints, $name);
+
+    @return if($min != 0, $min, null);
+}
+
+@function breakpoint-max($name, $breakpoints: $breakpoints) {
+    $next: breakpoint-next($name, $breakpoints);
+
+    @return if($next, breakpoint-min($next, $breakpoints) - 0.02px, null);
+}
+
+@function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+    $n: index($breakpoint-names, $name);
+
+    @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}

@@ -1,0 +1,24 @@
+.auth-layout {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .auth-image {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+
+    &.left {
+      bottom: 10%;
+      left: 16%;
+    }
+
+    &.right {
+      bottom: 10%;
+      right: 16%;
+    }
+  }
+}

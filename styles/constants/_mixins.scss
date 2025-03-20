@@ -1,0 +1,108 @@
+@mixin border-all($border-width: 1px, $border-color: #000) {
+    border: solid $border-width $border-color;
+}
+
+@mixin gradient-text() {
+    background: linear-gradient(90deg, $bright-aqua, $primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@mixin gradient-text-alternative() {
+    background: linear-gradient(180deg, $turquoise 13.6%, $cyan-blue 62.5%, $sea-blue 83.6%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@mixin font-size($fs-map, $font-weigth: 400, $fs-breakpoints: $breakpoints) {
+    font-weight: $font-weigth;
+    font-family: $font;
+
+    @each $fs-breakpoint, $fs-font-size in $fs-map {
+        @if $fs-breakpoint == null {
+            @include make-font-size($fs-font-size);
+        } @else {
+            // If $fs-font-size is a key that exists in
+            // $fs-breakpoints, use the value
+            @if map-has-key($fs-breakpoints, $fs-breakpoint) {
+                $fs-breakpoint: map-get($fs-breakpoints, $fs-breakpoint);
+            }
+            @media screen and (min-width: $fs-breakpoint) {
+                @include make-font-size($fs-font-size);
+            }
+        }
+    }
+}
+
+@mixin make-font-size($fs-font-size) {
+    // If $fs-font-size is a list, include
+    // both font-size and line-height
+    @if type-of($fs-font-size) == 'list' {
+        font-size: rem(nth($fs-font-size, 1));
+        @if (length($fs-font-size) > 1) {
+            line-height: rem(nth($fs-font-size, 2));
+        }
+    } @else {
+        font-size: rem($fs-font-size);
+    }
+}
+
+@mixin media-breakpoint-up($name, $breakpoints: $breakpoints) {
+    $min: breakpoint-min($name, $breakpoints);
+    @if $min {
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $breakpoints) {
+    $max: breakpoint-max($name, $breakpoints);
+    @if $max {
+        @media (max-width: $max) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $breakpoints) {
+    $min: breakpoint-min($lower, $breakpoints);
+    $max: breakpoint-max($upper, $breakpoints);
+
+    @if $min != null and $max != null {
+        @media (min-width: $min) and (max-width: $max) {
+            @content;
+        }
+    } @else if $max == null {
+        @include media-breakpoint-up($lower, $breakpoints) {
+            @content;
+        }
+    } @else if $min == null {
+        @include media-breakpoint-down($upper, $breakpoints) {
+            @content;
+        }
+    }
+}
+
+@mixin responsive-vw($px-vw) {
+    @media (min-width: 1442px) {
+        width: vw($px-vw);
+    }
+    @media (max-width: 1441px) {
+        width: $px-vw;
+    }
+}
+
+@mixin media-aspect-ratio($width, $height) {
+    @media (min-aspect-ratio: ($width / $height)) {
+        @content;
+    }
+}

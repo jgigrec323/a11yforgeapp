@@ -1,0 +1,8 @@
+.navbar {
+  position: relative;
+  > div {
+    position: absolute;
+    right: 100px;
+    top: 35px;
+  }
+}
