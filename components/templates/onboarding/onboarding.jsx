@@ -86,7 +86,11 @@ const OnBoarding = () => {
       >
         <ProgressDots totalSteps={totalSteps} currentStep={currentStep} />
 
-        <SignUpBtns title={"Skip onboarding"} type="secondary" />
+        {currentStep === steps.length - 1 ? (
+          <SignUpBtns title={"Finish onboarding"} type="primary" />
+        ) : (
+          <SignUpBtns title={"Skip onboarding"} type="secondary" />
+        )}
       </motion.div>
     </div>
   );
