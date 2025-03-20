@@ -8,13 +8,20 @@
   position: relative;
   padding-bottom: 3rem;
 
+  .step-guide-title {
+    position: absolute;
+    top: 60px;
+    left: 19%;
+  }
   .step {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: start;
     gap: 4rem;
-
+    .speech-bubble {
+      margin-top: 30px;
+    }
     .guides-container {
       display: flex;
       gap: 40px;
@@ -95,6 +102,7 @@
       }
 
       .speech-bubble {
+        margin-top: 50px;
         max-width: 280px;
         font-size: 16px;
         line-height: 1.5;
@@ -113,6 +121,7 @@
       margin: auto;
       position: relative;
       .speech-bubble {
+        margin-top: 50px;
         max-width: 280px;
         font-size: 16px;
         line-height: 1.5;
@@ -213,7 +222,7 @@
       .speech-bubble-container {
         position: absolute;
         left: 35px;
-        top: 0; // Adjust as needed
+        top: 20px;
 
         & .speech-bubble {
           max-width: 350px;

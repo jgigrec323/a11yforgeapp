@@ -1,0 +1,21 @@
+.step-guide-title {
+  text-align: center;
+  margin-bottom: 20px;
+
+  .step-text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+  }
+
+  .step-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+
+    & img {
+      object-fit: contain;
+    }
+  }
+}

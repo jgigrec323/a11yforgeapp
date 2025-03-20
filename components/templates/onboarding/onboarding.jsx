@@ -12,6 +12,7 @@ import FinalStep from "./final-step";
 import NavBtn from "../../atoms/buttons/nav-btn/nav-btn";
 import ProgressDots from "../../atoms/progress-dots/progress-dots";
 import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
+import StepGuideTitle from "../../atoms/step-guide-title/step-guide-title";
 
 const steps = [
   ChoosingGuide,
@@ -54,6 +55,8 @@ const OnBoarding = () => {
 
   return (
     <div className="onboarding">
+      {!isFinalStep && <StepGuideTitle />}
+
       <AnimatePresence mode="wait">
         {isFinalStep ? (
           <motion.div
