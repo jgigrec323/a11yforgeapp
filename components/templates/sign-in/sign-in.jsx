@@ -1,45 +1,97 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
-import SignUpDivider from "../../atoms/dividers/sign-up-divider/sign-up-divider";
-import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
+
+import SignUpDivider from "../../atoms/dividers/sign-up-divider/sign-up-divider";
+import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
+import { signin } from "../../../lib/api-calls";
 
 const SignIn = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const icons = {
     google: "/assets/logos/icon.png",
     apple: "/assets/logos/apple.png",
     microsoft: "/assets/logos/Microsoft.png",
     facebook: "/assets/logos/Facebook.png",
   };
+
   const togglePassword = () => setShowPassword(!showPassword);
+
+  const handleSignIn = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    if (!email.trim() || !password.trim()) {
+      toast.error("Email and password are required");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await signin({
+        username: email,
+        password,
+      }); /* have to modify here the  */
+
+      if (response?.data?.token) {
+        Cookies.set("allyforge-token", response.token, {
+          expires: 7,
+          secure: true,
+          sameSite: "Strict",
+          path: "/",
+        });
+
+        toast.success("Sign-in successful!");
+        router.push("/onboarding");
+      } else {
+        toast.error("Sign-in failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Sign-in failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="sign-in">
-      <form className="auth-form">
+      <form className="auth-form" onSubmit={handleSignIn}>
         <div className="input-group">
           <label>
             <Image
-              alt="Profile icon"
+              alt="Email icon"
               width={16}
               height={16}
-              src={"/assets/icons/iconamoon--profile-thin.png"}
-            ></Image>
-            Full Name
+              src={"/assets/icons/mdi--email-outline.png"}
+            />
+            Email
           </label>
-          <input type="text" placeholder="Enter your full name" required />
+          <input
+            type="text" /* should be changed for email */
+            placeholder="Enter your email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
+
         <div className="input-group">
           <label>
             <Image
-              alt="Password"
+              alt="Password icon"
               width={16}
               height={16}
               src={"/assets/icons/arcticons--lock.png"}
-            ></Image>
+            />
             Password
           </label>
           <div className="password-input">
@@ -47,6 +99,8 @@ const SignIn = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Enter password"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span className="eye-icon" onClick={togglePassword}>
               👁
@@ -54,34 +108,37 @@ const SignIn = () => {
           </div>
         </div>
 
-        <SignUpBtns title={"Sign In"} type="primary"></SignUpBtns>
+        <SignUpBtns
+          title={loading ? "Signing In..." : "Sign In"}
+          type="primary"
+          disabled={loading}
+        />
+
         <p className="forgot-password">
           Forgot Password? <Link href="/reset">Reset Here</Link>
         </p>
       </form>
+
       <SignUpDivider text="or Sign In with" />
+
       <div className="btns-container">
         <div className="btns-group">
           <SignUpBtns
             icon={icons.google}
             title={"Google"}
             type="social-google"
-          ></SignUpBtns>
-          <SignUpBtns
-            icon={icons.apple}
-            title={"Apple"}
-            type="social-apple"
-          ></SignUpBtns>
+          />
+          <SignUpBtns icon={icons.apple} title={"Apple"} type="social-apple" />
           <SignUpBtns
             icon={icons.microsoft}
             title={"Microsoft"}
             type="social-microsoft"
-          ></SignUpBtns>
+          />
           <SignUpBtns
             icon={icons.facebook}
             title={"Facebook"}
             type="social-facebook"
-          ></SignUpBtns>
+          />
         </div>
       </div>
     </div>
