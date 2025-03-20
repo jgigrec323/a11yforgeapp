@@ -107,8 +107,8 @@ const MultiStepForm = () => {
     event.preventDefault();
 
     if (!validateForm()) {
-      console.log("Validation failed!", errors);
-      return; // Stop execution if validation fails
+      toast.error("Please fix the errors before proceeding.");
+      return;
     }
     const userData = {
       firstName,
@@ -128,18 +128,19 @@ const MultiStepForm = () => {
     try {
       const response = await signup(userData);
 
-      console.log(response.data);
       if (response?.data?.token) {
         Cookies.set("token", response.data.token, {
-          expires: 7, // Expires in 7 days
+          expires: 7,
           secure: true,
           sameSite: "Strict",
           path: "/",
         });
+        toast.success("Signup successful!");
+
         router.push("/congratulations");
       } else {
         console.error("Signup successful but no token received.");
-        toast("Signup failed. Please try again.");
+        toast.error("Signup failed. Please try again.");
       }
     } catch (error) {
       console.error("Signup failed:", error);
