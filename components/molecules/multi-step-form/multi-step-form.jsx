@@ -129,12 +129,8 @@ const MultiStepForm = () => {
       const response = await signup(userData);
 
       if (response?.data?.token) {
-        Cookies.set("allyforge-token", response.data.token, {
-          expires: 7,
-          secure: true,
-          sameSite: "Strict",
-          path: "/",
-        });
+        updateUser(userData, response.data.token);
+
         toast.success("Signup successful!");
 
         router.push("/congratulations");

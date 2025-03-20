@@ -1,5 +1,6 @@
 import MainLayout from "../components/main-layout";
 import GlobalConfetti from "../components/atoms/globalconfetti/globalconfetti";
+import { GlobalProvider } from "../context/global-context";
 
 // export const metadata = {
 //     title: 'Create Next App',
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {/*  <GlobalConfetti /> */}
-        <MainLayout>{children}</MainLayout>
+        <GlobalProvider>
+          <MainLayout>{children}</MainLayout>
+        </GlobalProvider>
       </body>
     </html>
   );

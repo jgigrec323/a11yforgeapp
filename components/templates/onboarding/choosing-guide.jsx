@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import SpeechBubble from "../../atoms/speech-bubble/speech-bubble";
 import Image from "next/image";
+import { useGlobal } from "../../../context/global-context";
 
 const guides = [
   { id: "lena", name: "Lena", image: "/assets/images/guides/lena.png" },
@@ -9,7 +10,12 @@ const guides = [
   { id: "jd", name: "JD", image: "/assets/images/guides/jd.png" },
 ];
 
-const ChoosingGuide = ({ nextStep, setSelectedGuide, selectedGuide }) => {
+const ChoosingGuide = ({ selectedGuide }) => {
+  const { updateSelectedGuide } = useGlobal();
+
+  const handleSelectGuide = (guideId) => {
+    updateSelectedGuide(guideId);
+  };
   return (
     <div className="step step0">
       <SpeechBubble message="<strong>Hi Amelia, nice to meet you! 😊</strong><br>We are the a11yFORGE guides, here to assist you with your onboarding. Choose one of us to continue." />
@@ -21,7 +27,7 @@ const ChoosingGuide = ({ nextStep, setSelectedGuide, selectedGuide }) => {
             className={`guide-card ${
               selectedGuide === guide.id ? "selected" : ""
             }`}
-            onClick={() => setSelectedGuide(guide.id)}
+            onClick={() => handleSelectGuide(guide.id)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >

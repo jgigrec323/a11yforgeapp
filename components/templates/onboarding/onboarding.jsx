@@ -13,6 +13,7 @@ import NavBtn from "../../atoms/buttons/nav-btn/nav-btn";
 import ProgressDots from "../../atoms/progress-dots/progress-dots";
 import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import StepGuideTitle from "../../atoms/step-guide-title/step-guide-title";
+import { useGlobal } from "../../../context/global-context";
 
 const steps = [
   ChoosingGuide,
@@ -27,7 +28,8 @@ const steps = [
 const OnBoarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isFinalStep, setIsFinalStep] = useState(false);
-  const [selectedGuide, setSelectedGuide] = useState(null);
+  const { selectedGuide } = useGlobal();
+
   const totalSteps = steps.length;
 
   const nextStep = () => {
@@ -80,7 +82,6 @@ const OnBoarding = () => {
               nextStep={nextStep}
               prevStep={prevStep}
               selectedGuide={selectedGuide}
-              setSelectedGuide={setSelectedGuide}
             />
           </motion.div>
         )}
