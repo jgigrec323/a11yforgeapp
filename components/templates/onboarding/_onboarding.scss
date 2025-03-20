@@ -267,4 +267,81 @@
       font-weight: 200;
     }
   }
+
+  .step-final {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    position: relative;
+    margin-top: 5rem;
+
+    .final-content {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      position: relative;
+    }
+
+    .guide-container {
+      position: relative;
+      z-index: 2;
+
+      & img {
+        width: auto;
+        object-fit: contain;
+      }
+    }
+
+    .ally {
+      transform: translateX(-25%);
+      position: relative;
+      z-index: 2;
+      & img {
+        width: auto;
+        object-fit: contain;
+      }
+    }
+
+    // Absolute Speech Bubbles
+    .speech-bubble-container {
+      position: absolute;
+
+      strong {
+        font-weight: bold;
+      }
+    }
+
+    .guide-bubble {
+      top: -30px;
+      left: 50px;
+    }
+
+    .ally-bubble {
+      bottom: 50%;
+      right: 10%;
+      & .speech-bubble {
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -10px;
+          left: 20px;
+          width: 0;
+          height: 0;
+          border-left: 12px solid transparent;
+          border-right: 12px solid transparent;
+          border-top: 12px solid white;
+        }
+      }
+    }
+
+    .btn {
+      width: 300px;
+      font-size: 14px;
+    }
+  }
 }
