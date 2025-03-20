@@ -129,7 +129,7 @@ const MultiStepForm = () => {
       const response = await signup(userData);
 
       if (response?.data?.token) {
-        Cookies.set("token", response.data.token, {
+        Cookies.set("allyforge-token", response.data.token, {
           expires: 7,
           secure: true,
           sameSite: "Strict",
