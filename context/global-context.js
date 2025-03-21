@@ -7,26 +7,32 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [selectedGuide, setSelectedGuide] = useState("lena"); // Default guide
+  const [selectedGuide, setSelectedGuide] = useState("lena");
 
   useEffect(() => {
-    const savedToken = Cookies.get("allyforge-token");
-    if (localStorage.getItem("allyforge-token"))
-      if (savedToken) {
-        setToken(savedToken);
-      }
+    let savedToken =
+      Cookies.get("allyforge-token") || localStorage.getItem("allyforge-token");
+
+    if (savedToken) {
+      setToken(savedToken);
+      console.log("Token loaded from storage:", savedToken);
+    }
   }, []);
 
-  const updateUser = (userData, authToken) => {
+  const updateUser = (userData, authToken = token) => {
     setUser(userData);
-    setToken(authToken);
-    Cookies.set("allyforge-token", authToken, {
-      expires: 7,
-      secure: true,
-      sameSite: "Lax",
-      path: "/",
-    });
-    localStorage.setItem("allyforge-token", token);
+
+    // Only update the token if it's provided and not undefined/null
+    if (authToken) {
+      setToken(authToken);
+      Cookies.set("allyforge-token", authToken, {
+        expires: 7,
+        secure: true,
+        sameSite: "Strict",
+        path: "/",
+      });
+      localStorage.setItem("allyforge-token", authToken);
+    }
   };
 
   const updateSelectedGuide = (guideId) => {

@@ -11,6 +11,7 @@ const FinalStep = () => {
   const { user, token, selectedGuide } = useGlobal();
 
   const handleSetHealthProfile = () => {
+    console.log(user, token);
     if (!user || !token) {
       console.error("User data or token is missing!");
       return;
