@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 
 export function middleware(req) {
-  const token = req.cookies.get("allyforge-token");
+  const tokenCookie = req.cookies.get("allyforge-token");
 
-  if (!token) {
+  // Ensure tokenCookie exists and extract its value
+  const token = tokenCookie?.value;
+
+  if (!token || token === "undefined") {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 

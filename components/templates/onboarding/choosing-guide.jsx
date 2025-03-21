@@ -11,15 +11,20 @@ const guides = [
 ];
 
 const ChoosingGuide = ({ selectedGuide }) => {
-  const { updateSelectedGuide } = useGlobal();
+  const { user, updateSelectedGuide } = useGlobal();
+  const firstName = user?.first_name
+    ? user.first_name.charAt(0).toUpperCase() +
+      user.first_name.slice(1).toLowerCase()
+    : "Amelia";
 
   const handleSelectGuide = (guideId) => {
     updateSelectedGuide(guideId);
   };
   return (
     <div className="step step0">
-      <SpeechBubble message="<strong>Hi Amelia, nice to meet you! 😊</strong><br>We are the a11yFORGE guides, here to assist you with your onboarding. Choose one of us to continue." />
-
+      <SpeechBubble
+        message={`<strong>Hi ${firstName}, nice to meet you! 😊</strong><br>We are the a11yFORGE guides, here to assist you with your onboarding. Choose one of us to continue.`}
+      />
       <div className="guides-container">
         {guides.map((guide) => (
           <motion.div

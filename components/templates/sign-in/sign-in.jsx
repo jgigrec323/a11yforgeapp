@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import SignUpDivider from "../../atoms/dividers/sign-up-divider/sign-up-divider";
 import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import { signin } from "../../../lib/api-calls";
+import { useGlobal } from "../../../context/global-context";
 
 const SignIn = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { updateUser } = useGlobal();
 
   const icons = {
     google: "/assets/logos/icon.png",
@@ -41,14 +43,9 @@ const SignIn = () => {
         username: email,
         password,
       }); /* have to modify here the  */
-
+      console.log(response.data);
       if (response?.data?.token) {
-        Cookies.set("allyforge-token", response.token, {
-          expires: 7,
-          secure: true,
-          sameSite: "Strict",
-          path: "/",
-        });
+        updateUser({}, response.data.token);
 
         toast.success("Sign-in successful!");
         router.push("/onboarding");

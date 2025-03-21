@@ -3,28 +3,52 @@ import { motion } from "framer-motion";
 import SpeechBubble from "../../atoms/speech-bubble/speech-bubble";
 import Image from "next/image";
 import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
+import { useGlobal } from "../../../context/global-context";
 
-const FinalStep = ({ selectedGuide }) => {
+const EXTENSION_ID = "elfkkabjekhojhjjnllblmdnbfaocpml";
+
+const FinalStep = () => {
+  const { user, token, selectedGuide } = useGlobal();
+
+  const handleSetHealthProfile = () => {
+    if (!user || !token) {
+      console.error("User data or token is missing!");
+      return;
+    }
+
+    const userData = {
+      ...user, // Spread all user info
+      character: selectedGuide, // Assign selected guide as character
+      token, // Include authentication token
+    };
+
+    window.postMessage(
+      {
+        source: "A11yForge-WebApp",
+        action: "openSidebar",
+        extensionId: EXTENSION_ID,
+        userData,
+      },
+      "*"
+    );
+  };
+
   return (
     <motion.div
-      className=" step-final"
+      className="step-final"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Speech Bubble 1 - Guide */}
       <div className="speech-bubble-container guide-bubble">
         <SpeechBubble message="Now that you know the basics, let’s create some magic!" />
       </div>
 
-      {/* Speech Bubble 2 - Dog Ally */}
       <div className="speech-bubble-container ally-bubble">
         <SpeechBubble message="Click the button below to set up your health profile. 🦮✨" />
       </div>
 
-      {/* Main Content */}
       <div className="final-content">
-        {/* Selected Guide (Character) */}
         <motion.div
           className="guide-container"
           initial={{ opacity: 0 }}
@@ -38,7 +62,6 @@ const FinalStep = ({ selectedGuide }) => {
           />
         </motion.div>
 
-        {/* Dog Ally */}
         <motion.div
           className="ally"
           initial={{ opacity: 0 }}
@@ -54,8 +77,10 @@ const FinalStep = ({ selectedGuide }) => {
         </motion.div>
       </div>
 
-      {/* CTA Button */}
-      <SignUpBtns title={"Set Up Your Health Profile"} />
+      <SignUpBtns
+        title={"Set Up Your Health Profile"}
+        onClick={handleSetHealthProfile}
+      />
     </motion.div>
   );
 };

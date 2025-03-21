@@ -11,9 +11,10 @@ export const GlobalProvider = ({ children }) => {
 
   useEffect(() => {
     const savedToken = Cookies.get("allyforge-token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
+    if (localStorage.getItem("allyforge-token"))
+      if (savedToken) {
+        setToken(savedToken);
+      }
   }, []);
 
   const updateUser = (userData, authToken) => {
@@ -22,9 +23,10 @@ export const GlobalProvider = ({ children }) => {
     Cookies.set("allyforge-token", authToken, {
       expires: 7,
       secure: true,
-      sameSite: "Strict",
+      sameSite: "Lax",
       path: "/",
     });
+    localStorage.setItem("allyforge-token", token);
   };
 
   const updateSelectedGuide = (guideId) => {

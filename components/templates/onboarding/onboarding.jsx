@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ChoosingGuide from "./choosing-guide";
 import FirstStep from "./first-step";
@@ -14,6 +14,8 @@ import ProgressDots from "../../atoms/progress-dots/progress-dots";
 import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import StepGuideTitle from "../../atoms/step-guide-title/step-guide-title";
 import { useGlobal } from "../../../context/global-context";
+import toast from "react-hot-toast";
+import { fetchUser } from "@/lib/api-calls";
 
 const steps = [
   ChoosingGuide,
@@ -28,7 +30,7 @@ const steps = [
 const OnBoarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isFinalStep, setIsFinalStep] = useState(false);
-  const { selectedGuide } = useGlobal();
+  const { user, updateUser, selectedGuide } = useGlobal();
 
   const totalSteps = steps.length;
 
@@ -52,6 +54,24 @@ const OnBoarding = () => {
     console.log("Onboarding skipped!");
     // Redirect user to the main dashboard
   };
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const userData = await fetchUser();
+        if (userData) {
+          updateUser(userData);
+        } else {
+          toast.error("Failed to load user data");
+        }
+      } catch (error) {
+        toast.error("Error fetching user data");
+        console.error("Fetch user error:", error);
+      }
+    };
+
+    loadUser();
+  }, []);
 
   const StepComponent = steps[currentStep];
 
