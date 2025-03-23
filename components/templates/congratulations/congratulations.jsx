@@ -1,7 +1,19 @@
 "use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const Congratulations = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push("/onboarding");
+    }, 4000);
+
+    return () => clearTimeout(timer); // Cleanup function to prevent memory leaks
+  }, [router]);
+
   return (
     <div className="congrats">
       {/* Logo */}

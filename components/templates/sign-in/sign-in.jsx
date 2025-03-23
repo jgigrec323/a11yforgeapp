@@ -40,10 +40,9 @@ const SignIn = () => {
 
     try {
       const response = await signin({
-        username: email,
+        email,
         password,
-      }); /* have to modify here the  */
-      console.log(response.data);
+      });
       if (response?.data?.token) {
         updateUser({}, response.data.token);
 
@@ -73,7 +72,7 @@ const SignIn = () => {
             Email
           </label>
           <input
-            type="text" /* should be changed for email */
+            type="email"
             placeholder="Enter your email"
             required
             value={email}

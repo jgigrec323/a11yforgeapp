@@ -16,6 +16,8 @@ import StepGuideTitle from "../../atoms/step-guide-title/step-guide-title";
 import { useGlobal } from "../../../context/global-context";
 import toast from "react-hot-toast";
 import { fetchUser } from "@/lib/api-calls";
+import { useRouter } from "next/navigation";
+import { Loader } from "../../atoms/loaders/loader";
 
 const steps = [
   ChoosingGuide,
@@ -30,8 +32,11 @@ const steps = [
 const OnBoarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isFinalStep, setIsFinalStep] = useState(false);
+  const [loading, setLoading] = useState(true); // NEW
+
   const { user, updateUser, selectedGuide } = useGlobal();
 
+  const router = useRouter();
   const totalSteps = steps.length;
 
   const nextStep = () => {
@@ -63,10 +68,13 @@ const OnBoarding = () => {
           updateUser(userData);
         } else {
           toast.error("Failed to load user data");
+          router.push("/sign-in");
         }
       } catch (error) {
         toast.error("Error fetching user data");
         console.error("Fetch user error:", error);
+      } finally {
+        setLoading(false); // Hide loader
       }
     };
 
@@ -74,6 +82,14 @@ const OnBoarding = () => {
   }, []);
 
   const StepComponent = steps[currentStep];
+
+  if (loading) {
+    return (
+      <div className="onboarding-loader">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="onboarding">

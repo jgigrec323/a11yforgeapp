@@ -15,7 +15,6 @@ export const GlobalProvider = ({ children }) => {
 
     if (savedToken) {
       setToken(savedToken);
-      console.log("Token loaded from storage:", savedToken);
     }
   }, []);
 

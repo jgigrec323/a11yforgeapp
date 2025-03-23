@@ -7,6 +7,7 @@ import SignUpBtns from "../../atoms/buttons/sign-up-btns/sign-up-btns";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { signup } from "../../../lib/api-calls";
+import { useGlobal } from "@/context/global-context";
 
 const MultiStepForm = () => {
   const router = useRouter();
@@ -31,6 +32,8 @@ const MultiStepForm = () => {
   const [assistiveDevice, setAssistiveDevice] = useState("JAWS");
   const [socialMediaPlatform, setSocialMediaPlatform] = useState("LinkedIn");
   const [socialMediaLink, setSocialMediaLink] = useState("");
+
+  const { updateUser } = useGlobal();
 
   useEffect(() => {
     const countryList = Object.entries(countriesData).map(
