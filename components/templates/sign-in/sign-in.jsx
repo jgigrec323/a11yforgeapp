@@ -115,7 +115,7 @@ const SignIn = () => {
         </p>
       </form>
 
-      <SignUpDivider text="or Sign In with" />
+      {/* <SignUpDivider text="or Sign In with" />
 
       <div className="btns-container">
         <div className="btns-group">
@@ -136,7 +136,7 @@ const SignIn = () => {
             type="social-facebook"
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
