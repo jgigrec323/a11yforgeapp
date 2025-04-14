@@ -9,6 +9,15 @@ import toast from "react-hot-toast";
 import { signup } from "../../../lib/api-calls";
 import { useGlobal } from "@/context/global-context";
 
+// Import the options from userProfileSelectOptions.js
+import { 
+  accessibilityOptions, 
+  assistiveDeviceCategoryOptions, 
+  assistiveDeviceOptions, 
+  genderOptions, 
+  socialMediaOptions 
+} from "../../../lib/userProfileSelectOptions";
+
 const MultiStepForm = () => {
   const router = useRouter();
 
@@ -27,6 +36,7 @@ const MultiStepForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [location, setLocation] = useState("");
   const [accessibilityProfile, setAccessibilityProfile] = useState("");
+  const [pronouns, setPronouns] = useState("");
   const [assistiveDeviceCategory, setAssistiveDeviceCategory] =
     useState("Screen Reader");
   const [assistiveDevice, setAssistiveDevice] = useState("JAWS");
@@ -355,10 +365,11 @@ const MultiStepForm = () => {
               <option value="" disabled>
                 Select an accessibility profile
               </option>
-              <option value="blind">Blind / Low Vision</option>
-              <option value="deaf">Deaf / Hard of Hearing</option>
-              <option value="motor">Motor Impairment</option>
-              <option value="cognitive">Cognitive Disability</option>
+              {accessibilityOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -377,25 +388,28 @@ const MultiStepForm = () => {
                 value={assistiveDeviceCategory}
                 onChange={(e) => setAssistiveDeviceCategory(e.target.value)}
               >
-                <option value="Screen Reader">Screen Reader</option>
-                <option value="Speech Recognition">Speech Recognition</option>
+                {assistiveDeviceCategoryOptions.map((option) => (
+                  <option key={option.key} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
 
               <select
                 value={assistiveDevice}
                 onChange={(e) => setAssistiveDevice(e.target.value)}
               >
-                {assistiveDeviceCategory === "Screen Reader" && (
-                  <>
-                    <option value="JAWS">JAWS</option>
-                    <option value="NVDA">NVDA</option>
-                  </>
-                )}
-                {assistiveDeviceCategory === "Speech Recognition" && (
-                  <>
-                    <option value="Dragon">Dragon NaturallySpeaking</option>
-                  </>
-                )}
+                {assistiveDeviceCategory && 
+                  assistiveDeviceOptions[
+                    assistiveDeviceCategoryOptions.find(
+                      option => option.value === assistiveDeviceCategory
+                    )?.key || 'none'
+                  ].map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))
+                }
               </select>
             </div>
           </div>
@@ -416,8 +430,11 @@ const MultiStepForm = () => {
                 onChange={(e) => setSocialMedia(e.target.value)}
                 required
               >
-                <option value="LinkedIn">LinkedIn</option>
-                <option value="Twitter">Twitter</option>
+                {socialMediaOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
               <input
                 type="url"
@@ -427,6 +444,30 @@ const MultiStepForm = () => {
                 required
               />
             </div>
+          </div>
+          <div className="input-group">
+            <label>
+              <Image
+                alt="Accessibility profile"
+                width={16}
+                height={16}
+                src={"/assets/icons/icons8_gender.png"}
+              ></Image>
+              Pronouns
+            </label>
+            <select
+              value={pronouns}
+              onChange={(e) => setPronouns(e.target.value)}
+            >
+              <option value="" disabled>
+                Choose your pronouns
+              </option>
+              {genderOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <SignUpBtns type="primary" title={"Submit"} />
