@@ -1,0 +1,104 @@
+/* ============================================
+   LIGHT MODE (Default)
+=============================================== */
+:root {
+  --background: #ffffff;
+  --background-secondary: #f5f5f5;
+  --background-tertiary: #fafafa;
+  --border-color: #fdfdfd;
+  --light-gray: #f8f8f8;
+
+  --primary: #1e1463;
+  --secondary: #38299d;
+  --tertiary: #6053c0;
+  --accent: #cac0ff;
+  --highlight: #e9e5ff;
+
+  --green-primary: #0e5c3a;
+  --green-secondary: #0e6f45;
+  --green-tertiary: #118351;
+  --green-accent: #1eaa6c;
+
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #5b5b5b;
+  --text-light: #a6a6a6;
+
+  --gray-primary: #d0d0d0;
+  --gray-secondary: #f1f1f1;
+  --gray-tertiary: #f6f6f6;
+  --gray-quaternary: #f8f8f8;
+
+  --button-primary: #1e1463;
+  --button-secondary: #0e5c3a;
+
+  --link-color: #3a3a3a;
+
+  --body-background: var(--background);
+  --body-text: var(--text-primary);
+}
+
+/* ============================================
+     DARK MODE
+  =============================================== */
+html.dark {
+  --background: #1c1442;
+  --background-secondary: #221b56;
+  --background-tertiary: #2c2568;
+  --border-color: #2e2e2e;
+  --light-gray: #2c2c2c;
+
+  --primary: #cbc4f5;
+  --secondary: #aea3ef;
+  --tertiary: #1e1463;
+  --accent: #591a80;
+  --highlight: #1e1463;
+
+  --green-primary: #1eaa6c;
+  --green-secondary: #118351;
+  --green-tertiary: #0e6f45;
+  --green-accent: #0e5c3a;
+
+  --text-primary: #ededed;
+  --text-secondary: #cccccc;
+  --text-muted: #888888;
+  --text-light: #555555;
+
+  --gray-primary: #333333;
+  --gray-secondary: #2b2b2b;
+  --gray-tertiary: #1f1f1f;
+  --gray-quaternary: #181818;
+
+  --button-primary: #cbc4f5;
+  --button-secondary: #1eaa6c;
+  --link-color: #d3d3d3;
+}
+
+/* =====================================
+   GLOBAL RESET
+===================================== */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  font-family: "Satoshi", Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Base Styles */
+body {
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}

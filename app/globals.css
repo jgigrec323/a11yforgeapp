@@ -1,45 +1,12 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-html.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
-body {
-  overflow-x: hidden;
-  font-family: "Satoshi", Arial, Helvetica, sans-serif;
-  background: var(--background);
-  color: var(--foreground);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* Base Colors */
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Font faces */
+/* =====================================
+   FONT FACES - SATOSHI
+===================================== */
 @font-face {
   font-family: "Satoshi";
   src: url("/fonts/Satoshi/Satoshi-Light.woff2") format("woff2"),
     url("/fonts/Satoshi/Satoshi-Light.woff") format("woff");
   font-weight: 200;
+  font-style: normal;
 }
 
 @font-face {
@@ -47,6 +14,7 @@ a {
   src: url("/fonts/Satoshi/Satoshi-Regular.woff2") format("woff2"),
     url("/fonts/Satoshi/Satoshi-Regular.woff") format("woff");
   font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
@@ -54,6 +22,7 @@ a {
   src: url("/fonts/Satoshi/Satoshi-Medium.woff2") format("woff2"),
     url("/fonts/Satoshi/Satoshi-Medium.woff") format("woff");
   font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
@@ -61,16 +30,22 @@ a {
   src: url("/fonts/Satoshi/Satoshi-Bold.woff2") format("woff2"),
     url("/fonts/Satoshi/Satoshi-Bold.woff") format("woff");
   font-weight: 700;
+  font-style: normal;
 }
 
+/* =====================================
+   FONT FACES - DM SANS
+===================================== */
 @font-face {
   font-family: "DM Sans";
   src: url("/fonts/DMSans-Regular.woff2") format("woff2");
   font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
   font-family: "DM Sans";
   src: url("/fonts/DMSans-Bold.woff2") format("woff2");
   font-weight: 700;
+  font-style: normal;
 }
