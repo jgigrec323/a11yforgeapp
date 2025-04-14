@@ -30,7 +30,7 @@ const MultiStepForm = () => {
   const [assistiveDeviceCategory, setAssistiveDeviceCategory] =
     useState("Screen Reader");
   const [assistiveDevice, setAssistiveDevice] = useState("JAWS");
-  const [socialMediaPlatform, setSocialMediaPlatform] = useState("LinkedIn");
+  const [socialMedia, setSocialMedia] = useState("LinkedIn");
   const [socialMediaLink, setSocialMediaLink] = useState("");
 
   const { updateUser } = useGlobal();
@@ -124,7 +124,7 @@ const MultiStepForm = () => {
       accessibilityProfile,
       assistiveDeviceCategory,
       assistiveDevice,
-      socialMediaPlatform,
+      socialMedia,
       socialMediaLink,
     };
 
@@ -412,8 +412,8 @@ const MultiStepForm = () => {
             </label>
             <div className="social-media">
               <select
-                value={socialMediaPlatform}
-                onChange={(e) => setSocialMediaPlatform(e.target.value)}
+                value={socialMedia}
+                onChange={(e) => setSocialMedia(e.target.value)}
                 required
               >
                 <option value="LinkedIn">LinkedIn</option>
