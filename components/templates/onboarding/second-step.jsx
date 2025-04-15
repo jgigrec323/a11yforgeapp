@@ -38,6 +38,7 @@ const SecondStep = ({ nextStep, selectedGuide }) => {
           transition={{ delay: 0.3 }}
         >
           <Image
+            unoptimized={true}
             src={"/assets/gifs/second-gif.gif"}
             alt="Second step UI demo"
             width={300}
