@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
+  const [mode, setMode] = useState("light");
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [selectedGuide, setSelectedGuide] = useState("lena");
@@ -40,7 +41,15 @@ export const GlobalProvider = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ user, token, selectedGuide, updateUser, updateSelectedGuide }}
+      value={{
+        user,
+        token,
+        selectedGuide,
+        updateUser,
+        updateSelectedGuide,
+        mode,
+        setMode,
+      }}
     >
       {children}
     </GlobalContext.Provider>

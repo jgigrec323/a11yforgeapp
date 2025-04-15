@@ -16,3 +16,8 @@
     margin: 0 10px;
   }
 }
+html.dark {
+  .divider {
+    color: var(--text-secondary);
+  }
+}
