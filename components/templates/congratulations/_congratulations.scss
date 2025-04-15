@@ -35,3 +35,13 @@
     }
   }
 }
+html.dark .congrats {
+  .text {
+    h2 {
+      color: var(--text-primary);
+    }
+    p {
+      color: var(--text-secondary);
+    }
+  }
+}

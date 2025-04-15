@@ -359,3 +359,32 @@
     }
   }
 }
+
+html.dark .onboarding {
+  .guide-name {
+    color: #cbc4f5;
+    border: 1px solid #cbc4f5;
+  }
+  .guide-name.selected {
+    background-color: #cbc4f5;
+    color: #cbc4f5;
+  }
+  .step-guide-title {
+    color: #cbc4f5;
+  }
+  .onboarding .step1-content .demo-gif img {
+    filter: brightness(0.8);
+  }
+  .onboarding .step4-content .demo-gif img {
+    filter: brightness(0.8);
+  }
+  .onboarding .step5-content .chat-ui img {
+    filter: brightness(0.8);
+  }
+  .onboarding .step-final-content .chat-ui img {
+    filter: brightness(0.8);
+  }
+  .onboarding .step.step4 .ally-speech-bubble .speech-bubble::after {
+    bottom: -12px;
+  }
+}

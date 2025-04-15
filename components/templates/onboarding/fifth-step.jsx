@@ -45,6 +45,7 @@ const FifthStep = ({ nextStep, selectedGuide }) => {
           transition={{ delay: 0.3 }}
         >
           <Image
+            unoptimized={true}
             src={"/assets/gifs/fifth-gif.gif"}
             alt="Chat UI Demo"
             width={280}

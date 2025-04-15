@@ -31,3 +31,13 @@
     visibility: hidden;
   }
 }
+html.dark .nav-btn {
+  background: transparent;
+  border: 2px solid #1e1463;
+  color: #cbc4f5;
+
+  &:hover {
+    background: #cbc4f5;
+    color: #1e1463;
+  }
+}

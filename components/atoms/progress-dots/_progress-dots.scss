@@ -16,3 +16,12 @@
     }
   }
 }
+html.dark .progress-dots {
+  .dot {
+    background: #cbc4f5;
+
+    &.active {
+      background: #1e1463;
+    }
+  }
+}

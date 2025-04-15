@@ -27,3 +27,13 @@
     }
   }
 }
+
+html.dark {
+  .auth-header {
+    .tab {
+      a {
+        color: var(--text-primary);
+      }
+    }
+  }
+}

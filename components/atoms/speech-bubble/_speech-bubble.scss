@@ -21,12 +21,21 @@
   &::after {
     content: "";
     position: absolute;
-    bottom: -10px;
+    bottom: -12px;
     right: 20px;
     width: 0;
     height: 0;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
     border-top: 12px solid white;
+  }
+}
+html.dark .speech-bubble {
+  background: transparent;
+  color: #cbc4f5;
+  border: 2px solid #cbc4f5;
+
+  &::after {
+    border-top-color: #cbc4f5;
   }
 }

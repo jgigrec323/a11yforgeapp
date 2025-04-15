@@ -39,6 +39,7 @@ const FourthStep = ({ nextStep, selectedGuide }) => {
           transition={{ delay: 0.3 }}
         >
           <Image
+            unoptimized={true}
             src={"/assets/gifs/fourth-gif.gif"}
             alt="Fourth step UI demo"
             width={300}

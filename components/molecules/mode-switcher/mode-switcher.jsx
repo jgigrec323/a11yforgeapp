@@ -1,45 +1,52 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect } from "react";
+import { useGlobal } from "@/context/global-context";
 
 const ModeSwitcher = () => {
-    const [darkMode, setDarkMode] = useState(false)
+  const { mode, setMode } = useGlobal();
 
-    useEffect(() => {
-        // Check localStorage for saved theme preference
-        const savedTheme = localStorage.getItem('theme')
+  // Sync initial theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
 
-        if (
-            savedTheme === 'dark' ||
-            (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-            setDarkMode(true)
-            document.documentElement.classList.add('dark')
-        }
-    }, [])
+    setMode(isDark ? "dark" : "light");
 
-    const toggleDarkMode = () => {
-        const newMode = !darkMode
-
-        setDarkMode(newMode)
-
-        if (newMode) {
-            document.documentElement.classList.add('dark')
-            localStorage.setItem('theme', 'dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-            localStorage.setItem('theme', 'light')
-        }
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
+  }, [setMode]);
 
-    return (
-        <button
-            title="mode switcher"
-            onClick={toggleDarkMode}
-            className={`mode-switcher ${darkMode ? 'dark' : ''}`}>
-            <div className={`toggle-circle ${darkMode ? 'dark active' : ''}`}></div>
-        </button>
-    )
-}
+  // Toggle theme
+  const toggleDarkMode = () => {
+    const newMode = mode === "light" ? "dark" : "light";
+    setMode(newMode);
+    localStorage.setItem("theme", newMode);
 
-export default ModeSwitcher
+    if (newMode === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  return (
+    <button
+      title="mode switcher"
+      onClick={toggleDarkMode}
+      className={`mode-switcher ${mode === "dark" ? "dark" : ""}`}
+    >
+      <div
+        className={`toggle-circle ${mode === "dark" ? "dark active" : ""}`}
+      ></div>
+    </button>
+  );
+};
+
+export default ModeSwitcher;

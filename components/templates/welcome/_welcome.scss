@@ -10,7 +10,7 @@
     color: $text-muted;
   }
   .welcome-title {
-    color: $primary;
+    color: var(--text-primary);
     text-transform: capitalize;
   }
   .img-container {
@@ -31,5 +31,10 @@
       gap: 1rem;
       margin-bottom: 2rem;
     }
+  }
+}
+html.dark {
+  .welcome-small-title {
+    color: var(--text-secondary);
   }
 }
