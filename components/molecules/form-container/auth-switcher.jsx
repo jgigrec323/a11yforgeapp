@@ -3,17 +3,21 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useGlobal } from "@/context/global-context";
 
 const AuthSwitcher = () => {
   const pathname = usePathname();
   const isSignIn = pathname === "/sign-in";
   const isSignUp = pathname === "/register";
+  const { mode } = useGlobal();
 
   return (
     <div className="auth-header">
       <div className="logo">
         <Image
-          src={"/assets/Logo.png"}
+          src={
+            mode === "light" ? "/assets/Logo.png" : "/assets/Logo-dark-mode.png"
+          }
           alt="A11y FORGE Logo"
           width={120}
           height={50}

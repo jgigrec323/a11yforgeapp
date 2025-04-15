@@ -2,9 +2,11 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useGlobal } from "@/context/global-context";
 
 const Congratulations = () => {
   const router = useRouter();
+  const { mode } = useGlobal();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -19,10 +21,12 @@ const Congratulations = () => {
       {/* Logo */}
       <div className="logo">
         <Image
-          src="/assets/Logo.png"
-          alt="A11y FORGE Logo"
+          src={
+            mode === "light" ? "/assets/Logo.png" : "/assets/Logo-dark-mode.png"
+          }
           width={100}
           height={40}
+          alt="Logo"
         />
       </div>
 

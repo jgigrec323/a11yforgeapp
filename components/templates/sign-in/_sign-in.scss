@@ -92,3 +92,23 @@
     }
   }
 }
+html.dark {
+  .auth-form {
+    .input-group {
+      input {
+        border: 1px solid var(--text-primary);
+        background-color: transparent;
+        color: var(--text-primary);
+      }
+    }
+  }
+  .forgot-password {
+    color: var(--text-primary) !important;
+    a {
+      color: var(--text-primary) !important;
+    }
+  }
+  .eye-icon {
+    color: var(--text-primary) !important;
+  }
+}

@@ -45,6 +45,7 @@
         font-weight: 200;
         margin-bottom: 8px;
         text-align: start;
+        color: #000000;
       }
 
       input,
@@ -187,6 +188,71 @@
         &:hover {
           text-decoration: underline;
           color: #1e1463;
+        }
+      }
+    }
+  }
+}
+
+// DARK MODE STYLING
+html.dark {
+  .multi-step-form {
+    .steps {
+      span {
+        color: var(--text-primary);
+        &.active {
+          color: var(--text-primary);
+          border-bottom: 2px solid $primary;
+        }
+      }
+    }
+
+    .form {
+      .input-group {
+        input,
+        select {
+          background-color: transparent;
+          color: var(--text-primary);
+          border: 1px solid var(--text-primary);
+
+          &:focus {
+            border-color: var(--text-primary);
+          }
+
+          &::placeholder {
+            color: transparent;
+          }
+        }
+        label {
+          color: var(--text-primary);
+        }
+
+        select {
+          option {
+            background-color: #1c1442;
+            color: var(--text-primary);
+          }
+        }
+      }
+
+      input {
+        color: var(--text-primary);
+        &::placeholder {
+          color: var(--text-primary);
+        }
+      }
+      .select-wrapper {
+        background: transparent;
+        & > select {
+          border: none;
+        }
+      }
+      select {
+        background-color: transparent;
+
+        option {
+          background-color: #1c1442;
+          color: var(--text-primary);
         }
       }
     }

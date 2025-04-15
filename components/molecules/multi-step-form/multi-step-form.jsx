@@ -10,13 +10,22 @@ import { signup } from "../../../lib/api-calls";
 import { useGlobal } from "@/context/global-context";
 
 // Import the options from userProfileSelectOptions.js
-import { 
-  accessibilityOptions, 
-  assistiveDeviceCategoryOptions, 
-  assistiveDeviceOptions, 
-  genderOptions, 
-  socialMediaOptions 
+import {
+  accessibilityOptions,
+  assistiveDeviceCategoryOptions,
+  assistiveDeviceOptions,
+  genderOptions,
+  socialMediaOptions,
 } from "../../../lib/userProfileSelectOptions";
+import ProfileThinIcon from "../../atoms/forms-icons-components/ProfileThinIcon";
+import EmailIcon from "../../atoms/forms-icons-components/EmailIcon";
+import LightPhoneIcon from "../../atoms/forms-icons-components/LightPhoneIcon";
+import AkarLocationIcon from "../../atoms/forms-icons-components/AkarLocation";
+import AccessibilityOutlineIcon from "../../atoms/forms-icons-components/AccessibilityOutlineIcon";
+import ArticonsLockIcon from "@/components/atoms/forms-icons-components/ArticonsLockIcon";
+import AssistiveListeningIcon from "@/components/atoms/forms-icons-components/AssistiveListeningIcon";
+import PeopleOutlineIcon from "@/components/atoms/forms-icons-components/PeopleOutlineIcon";
+import GenderIcon from "@/components/atoms/forms-icons-components/GenderIcon";
 
 const MultiStepForm = () => {
   const router = useRouter();
@@ -43,7 +52,7 @@ const MultiStepForm = () => {
   const [socialMedia, setSocialMedia] = useState("LinkedIn");
   const [socialMediaLink, setSocialMediaLink] = useState("");
 
-  const { updateUser } = useGlobal();
+  const { updateUser, mode } = useGlobal();
 
   useEffect(() => {
     const countryList = Object.entries(countriesData).map(
@@ -179,12 +188,7 @@ const MultiStepForm = () => {
         <form className="form" onSubmit={handleNextStep}>
           <div className="input-group">
             <label>
-              <Image
-                alt="Profile icon"
-                width={16}
-                height={16}
-                src={"/assets/icons/iconamoon--profile-thin.png"}
-              ></Image>
+              <ProfileThinIcon mode={mode} />
               First Name
             </label>
             <input
@@ -197,12 +201,7 @@ const MultiStepForm = () => {
           </div>
           <div className="input-group">
             <label>
-              <Image
-                alt="Profile icon"
-                width={16}
-                height={16}
-                src={"/assets/icons/iconamoon--profile-thin.png"}
-              ></Image>
+              <ProfileThinIcon mode={mode} />
               Last Name
             </label>
             <input
@@ -216,12 +215,7 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              <Image
-                alt="Password"
-                width={16}
-                height={16}
-                src={"/assets/icons/mdi--email-outline.png"}
-              ></Image>
+              <EmailIcon mode={mode} />
               Email
             </label>
             <input
@@ -235,12 +229,7 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              <Image
-                alt="Phone"
-                width={16}
-                height={16}
-                src={"/assets/icons/mdi-light--phone.png"}
-              ></Image>
+              <LightPhoneIcon mode={mode} />
               Phone Number
             </label>
             <div className="phone-input">
@@ -277,12 +266,7 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              <Image
-                alt="Password"
-                width={16}
-                height={16}
-                src={"/assets/icons/arcticons--lock.png"}
-              ></Image>
+              <ArticonsLockIcon mode={mode} />
               Password
             </label>
             <div className="password-input">
@@ -301,12 +285,7 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              <Image
-                alt="lock"
-                width={16}
-                height={16}
-                src={"/assets/icons/arcticons--lock.png"}
-              ></Image>
+              <ArticonsLockIcon mode={mode} />
               Confirm Password
             </label>
             <div className="password-input">
@@ -332,12 +311,7 @@ const MultiStepForm = () => {
         <form className="form" onSubmit={handleRegister}>
           <div className="input-group">
             <label>
-              <Image
-                alt="Location"
-                width={16}
-                height={16}
-                src={"/assets/icons/akar-icons--location.png"}
-              ></Image>
+              <AkarLocationIcon mode={mode} />
               Location
             </label>
             <input
@@ -350,12 +324,7 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              <Image
-                alt="Accessibility profile"
-                width={16}
-                height={16}
-                src={"/assets/icons/famicons--accessibility-outline.png"}
-              ></Image>
+              <AccessibilityOutlineIcon mode={mode} />
               Accessibility Profile
             </label>
             <select
@@ -375,12 +344,7 @@ const MultiStepForm = () => {
 
           <div className="input-group">
             <label>
-              <Image
-                alt="Assistive device"
-                width={16}
-                height={16}
-                src={"/assets/icons/guidance--assistive-listening-device.png"}
-              ></Image>
+              <AssistiveListeningIcon mode={mode} />
               Assistive Device
             </label>
             <div className="device-selection">
@@ -399,29 +363,23 @@ const MultiStepForm = () => {
                 value={assistiveDevice}
                 onChange={(e) => setAssistiveDevice(e.target.value)}
               >
-                {assistiveDeviceCategory && 
+                {assistiveDeviceCategory &&
                   assistiveDeviceOptions[
                     assistiveDeviceCategoryOptions.find(
-                      option => option.value === assistiveDeviceCategory
-                    )?.key || 'none'
+                      (option) => option.value === assistiveDeviceCategory
+                    )?.key || "none"
                   ].map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
-                  ))
-                }
+                  ))}
               </select>
             </div>
           </div>
 
           <div className="input-group">
             <label>
-              <Image
-                alt="Social media"
-                width={16}
-                height={16}
-                src={"/assets/icons/famicons--people-outline.png"}
-              ></Image>
+              <PeopleOutlineIcon mode={mode} />
               Social Media
             </label>
             <div className="social-media">
@@ -447,12 +405,7 @@ const MultiStepForm = () => {
           </div>
           <div className="input-group">
             <label>
-              <Image
-                alt="Accessibility profile"
-                width={16}
-                height={16}
-                src={"/assets/icons/icons8_gender.png"}
-              ></Image>
+              <GenderIcon mode={mode} />
               Pronouns
             </label>
             <select
